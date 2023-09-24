@@ -11,75 +11,15 @@ int main()
 
 class item {
 private:
-    float amountProduced;
-    int timeToProduce;
+    bool isPrimary;
 public:
     string name;
     int id;
 
-    item(string name = "placeholder", int id = -1, float amountProduced = 0, int timeTaken = 0) {
+    item(string name = "placeholder", int id = -1, bool isPrimary = false) {
         item::name = name;
         item::id = id;
-        item::amountProduced = amountProduced;
-        item::timeToProduce = timeTaken;
-    }
-
-    void setAmountProducedPerMinute(float amountProduced) {
-        item::amountProduced = amountProduced;
-    }
-
-    void setTimeToProduce(int time) {
-        item::timeToProduce = time;
-    }
-
-    float getAmountProduced() {
-        return item::amountProduced;
-    }
-
-    int getTimeToProduce() {
-        return item::timeToProduce;
-    }
-
-    float getAmountProducedPerMinute() {
-        const int minute = 60;
-        return (amountProduced * (minute / timeToProduce));
-    }
-};
-
-class primaryResource :
-    public item
-{
-
-};
-
-class secondaryResource :
-    public item
-{
-private:
-    item itemsNeeded[4];
-    float amountsNeeded[4];
-
-public:
-    secondaryResource() {
-
-    }
-
-    secondaryResource(int inputAmount, item itemsNeeded[], float amountsNeeded[]) {
-        for (int i = 0; i < inputAmount; i++)
-        {
-            secondaryResource::itemsNeeded[i] = itemsNeeded[i];
-            secondaryResource::amountsNeeded[i] = amountsNeeded[i];
-        }
-    }
-
-    void addResource(item itemNeeded, float amountNeeded) {
-        for (int i = 0; i < sizeof(amountsNeeded) / sizeof(float); i++)
-        {
-            if (amountsNeeded[i] == NULL) {
-                itemsNeeded[i] = itemNeeded;
-                amountsNeeded[i] = amountNeeded;
-            }
-        }
+        item::isPrimary = isPrimary;
     }
 };
 
@@ -88,12 +28,29 @@ public:
     int id;
     string name;
     float energyUse;
+    float efficiencyPercentage = 100;
 
     building(int id, string name, float energyUse) {
         building::id = id;
         building::name = name;
         building::energyUse = energyUse;
     }
+};
+
+class RecipeItem {
+public:
+    item item;
+    float resultAmount;
+    int timeToProduce;
+};
+
+class recipe {
+public:
+    RecipeItem result;
+    RecipeItem inputs[4];
+    building building;
+
+
 };
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
